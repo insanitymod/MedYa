@@ -1,18 +1,34 @@
 import mysql.connector
 
-# se connecter à la base de données
-conn = mysql.connector.connect(user='nom_utilisateur', password='mot_de_passe', host='hôte', database='nom_de_la_base_de_donnees')
+# recupere les donner 
+nom=input("nom")
+prenom=input("prenom")
+email=input("email")
 
-# créer un curseur pour exécuter les requêtes SQL
-cur = conn.cursor()
+# se connecter a la BD
 
-# insérer un nouveau patient
-cur.execute("INSERT INTO Patient (id, nom, prenom, date_naissance, adresse, num_telephone) VALUES (%s, %s, %s, %s, %s, %s)",
-            (1, 'Dupont', 'Jean', '1990-01-01', '1 rue des Lilas', '0601020304'))
 
-# valider la transaction
-conn.commit()
+connection=mysql.connector.connect(host="fdb28.awardspace.net",
+                                       user="4310852_medya",
+                                       password="Momo-007",
+                                       database="4310852_medya")
 
-# fermer le curseur et la connexion
-cur.close()
-conn.close()
+# inseretion
+try:
+
+    cursor=connection.cursor()
+    insert="insert into Medya (nom.prenom.email) values (%s,%s,%s)"
+    valeur=(nom,prenom,email)
+    cursor.execute(insert,valeur)
+    connection.commit()
+finally:
+
+    if  connection.is_connected():
+        cursor.close()
+        connection.close()
+
+    
+
+
+
+
